@@ -2,7 +2,7 @@ const form = document.getElementById("bugForm");
 const input = document.getElementById("bugInput");
 const resultBox = document.getElementById("result");
 
-const API_URL = "https://ai-bug-explainer-2vo3.onrender.com";
+const API_URL = "https://ai-bug-explainer-2vo3.onrender.com/api/explain";
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
