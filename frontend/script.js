@@ -1,32 +1,40 @@
-async function explainBug() {
-  const error = document.getElementById("error").value;
-  const resultDiv = document.getElementById("result");
-  const loader = document.getElementById("loader");
+const form = document.getElementById("bugForm");
+const input = document.getElementById("bugInput");
+const resultBox = document.getElementById("result");
 
-  resultDiv.innerHTML = "";
-  loader.classList.remove("hidden");
+const API_URL = "https://ai-bug-explainer-2vo3.onrender.com";
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const errorText = input.value.trim();
+
+  if (!errorText) {
+    resultBox.innerText = "Please enter an error!";
+    return;
+  }
+
+  resultBox.innerText = "Analyzing...";
 
   try {
-    const res = await fetch("/api/explain", {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ error })
+      body: JSON.stringify({ error: errorText })
     });
 
     const data = await res.json();
 
-    loader.classList.add("hidden");
-
-    // Better formatting
-    resultDiv.innerHTML = `
-      <h3>Explanation:</h3>
-      <p>${data.response}</p>
-    `;
+    if (data.response) {
+      resultBox.innerText = data.response;
+    } else {
+      resultBox.innerText = "No response from AI";
+    }
 
   } catch (err) {
-    loader.classList.add("hidden");
-    resultDiv.innerHTML = "❌ Error occurred";
+    console.error(err);
+    resultBox.innerText = "Something went wrong. Try again!";
   }
-}
+});

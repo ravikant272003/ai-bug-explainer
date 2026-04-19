@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-// 🔥 AI ROUTE
+// AI ROUTE
 app.post("/api/explain", async (req, res) => {
   const { error } = req.body;
 
@@ -31,7 +31,7 @@ app.post("/api/explain", async (req, res) => {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "openrouter/auto", // ✅ FREE model auto select
+        model: "openrouter/auto", 
         messages: [
           {
             role: "user",
@@ -76,5 +76,5 @@ ${error}`
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
